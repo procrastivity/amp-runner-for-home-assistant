@@ -1,5 +1,5 @@
 {
   "runner_id": "grandmas-garage-server",
   "remote_control_terminal": true,
-  "working_directory": "/config"
+  "working_directory": "/homeassistant"
 }

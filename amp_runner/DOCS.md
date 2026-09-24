@@ -56,8 +56,14 @@ With a key that is not valid, the log shows
 
 ### Option: `working_directory`
 
-Default: `/config`. Amp starts in this directory. When the directory does
-not exist, the add-on logs a warning and uses `/config`.
+Default: `/homeassistant`, where the add-on mounts the Home Assistant
+configuration directory. Amp starts in this directory. When the directory
+does not exist, the add-on logs a warning and uses `/homeassistant`. When
+that directory also does not exist, the add-on uses `/data`.
+
+Do not use `/config`. In current Supervisor versions, `/config` is the path
+for an add-on's own configuration folder, and this add-on does not map one.
+
 
 ## Persistence
 

@@ -1,5 +1,5 @@
 name: Amp Runner
-version: "0.1.0"
+version: "0.1.1"
 slug: amp_runner
 description: Runs the Amp coding agent headless (amp --no-tui) as a supervised service
 url: https://github.com/procrastivity/amp-runner-for-home-assistant
@@ -36,7 +36,7 @@ map:
 
 options:
   remote_control_terminal: false
-  working_directory: /config
+  working_directory: /homeassistant
 schema:
   # Amp requires a valid hostname: dot-separated labels of letters, digits, and hyphens.
   runner_id: 'match(^[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$)?'

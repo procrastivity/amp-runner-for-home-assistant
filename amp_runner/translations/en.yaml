@@ -17,4 +17,5 @@ configuration:
   working_directory:
     name: Working directory
     description: >-
-      The directory where Amp starts. Default: /config.
+      The directory where Amp starts. Default: /homeassistant, the Home
+      Assistant configuration directory.

@@ -13,7 +13,9 @@ You run inside the "Amp Runner" Home Assistant add-on on Home Assistant OS.
 
 ## Paths
 
-- `/config` — Home Assistant configuration (configuration.yaml, automations, etc.)
+- `/homeassistant` — Home Assistant configuration (configuration.yaml,
+  automations, etc.). Home Assistant Core sees this directory as `/config`,
+  so paths in the HA configuration and in HA logs use `/config`.
 - `/addon_configs` — configuration of all add-ons
 - `/addons` — local add-on sources
 - `/share`, `/media`, `/backup`, `/ssl` — shared Supervisor directories
@@ -33,7 +35,7 @@ You run inside the "Amp Runner" Home Assistant add-on on Home Assistant OS.
 
 ## Rules
 
-- Before you change anything in `/config`, create a backup with `ha backups new`.
+- Before you change anything in `/homeassistant`, create a backup with `ha backups new`.
 - After you change the HA configuration, run `ha core check` before `ha core restart`.
 - Ask the user before you restart Home Assistant, the host, or any add-on.
 - Ask the user before you delete files or containers.
