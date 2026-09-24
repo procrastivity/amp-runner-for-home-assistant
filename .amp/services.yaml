@@ -1,0 +1,5 @@
+services:
+  docker-daemon:
+    command: sudo -n dockerd
+    platforms:
+      - linux

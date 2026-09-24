@@ -16,6 +16,20 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+if ! command -v docker > /dev/null 2>&1; then
+    echo "Docker CLI is not installed; run .agents/setup first" >&2
+    exit 1
+fi
+
+DOCKER=(docker)
+if ! "${DOCKER[@]}" info > /dev/null 2>&1; then
+    DOCKER=(sudo -n docker)
+fi
+if ! "${DOCKER[@]}" info > /dev/null 2>&1; then
+    echo "Docker daemon is unavailable; in an orb, run 'amp orb services ensure'" >&2
+    exit 1
+fi
+
 IMAGE="${IMAGE:-local/amp_runner:dev}"
 MOCK_IMAGE="${MOCK_IMAGE:-busybox:stable}"
 SECRET="sk-test-secret-do-not-log"
@@ -27,14 +41,14 @@ www="$(mktemp -d)"
 mkdir -p "${www}/addons/self/options"
 
 cleanup() {
-    docker rm -f "${MOCK}" > /dev/null 2>&1 || true
-    docker network rm "${NETWORK}" > /dev/null 2>&1 || true
+    "${DOCKER[@]}" rm -f "${MOCK}" > /dev/null 2>&1 || true
+    "${DOCKER[@]}" network rm "${NETWORK}" > /dev/null 2>&1 || true
     rm -rf "${www}"
 }
 trap cleanup EXIT
 
-docker network create "${NETWORK}" > /dev/null
-docker run -d --rm \
+"${DOCKER[@]}" network create "${NETWORK}" > /dev/null
+"${DOCKER[@]}" run -d --rm \
     --name "${MOCK}" \
     --network "${NETWORK}" \
     --network-alias supervisor \
@@ -60,7 +74,7 @@ run_case() {
         mounts+=(-v "${config_dir}:/homeassistant")
     fi
     output="$(
-        docker run --rm \
+        "${DOCKER[@]}" run --rm \
             --network "${NETWORK}" \
             --entrypoint /usr/bin/bashio \
             "${mounts[@]}" \

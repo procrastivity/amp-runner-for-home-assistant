@@ -22,6 +22,17 @@ You can then use Amp to debug and configure Home Assistant remotely.
 2. In the Add-on Store menu, select **Check for updates**.
 3. The add-on appears under **Local add-ons**.
 
+## Orb development
+
+The orb setup installs Docker Engine, Buildx, `jq`, and ShellCheck. The Docker daemon is managed
+as an orb service and starts when the orb resumes. To build the add-on image and run the option
+tests:
+
+```sh
+sudo docker buildx build --load --tag local/amp_runner:dev amp_runner
+./test/run-cases.sh
+```
+
 ## Security warning
 
 > [!WARNING]

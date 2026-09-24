@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+docker_ready() {
+    docker info >/dev/null 2>&1 || sudo -n docker info >/dev/null 2>&1
+}
+
+if docker_ready; then
+    exit 0
+fi
+
+amp orb services ensure --json >/dev/null
+
+for _ in {1..8}; do
+    if docker_ready; then
+        exit 0
+    fi
+    sleep 1
+done
+
+echo 'Docker daemon did not become ready; inspect the docker-daemon orb service logs.' >&2
+exit 1
