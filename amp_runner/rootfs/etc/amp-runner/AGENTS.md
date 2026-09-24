@@ -16,8 +16,10 @@ You run inside the "Amp Runner" Home Assistant add-on on Home Assistant OS.
 - `/homeassistant` — Home Assistant configuration (configuration.yaml,
   automations, etc.). Home Assistant Core sees this directory as `/config`,
   so paths in the HA configuration and in HA logs use `/config`.
-- `/addon_configs` — configuration of all add-ons
-- `/addons` — local add-on sources
+- `/app_configs` — configuration folders of all add-ons (on the host and
+  in the Samba share, this is `addon_configs`)
+- `/local_apps` — local add-on sources (on the host and in the Samba
+  share, this is `addons`)
 - `/share`, `/media`, `/backup`, `/ssl` — shared Supervisor directories
 - `/data` — this add-on's private persistent storage (also $HOME)
 

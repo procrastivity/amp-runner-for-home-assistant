@@ -9,6 +9,10 @@ debug and configure Home Assistant.
 
 ## Before you start
 
+- Make sure that the Supervisor is version 2026.07.1 or newer
+  (**Settings → System → Repairs → ⋮ → System information**).
+  Older versions do not know the add-on's `map` types and do not show it.
+
 - In the **Info** tab, turn off **Protection mode**. The add-on needs this
   for the Docker socket and full hardware access.
 - Set the `api_key` option (see below). Without a key or earlier login

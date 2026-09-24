@@ -11,6 +11,10 @@
   Home Assistant configuration. The add-on does not replace an existing
   `/data/.config/amp/AGENTS.md`. To get the new default, delete that file
   and restart the add-on.
+- Use the app-based map types `all_app_configs` and `local_apps` in place
+  of the deprecated `all_addon_configs` and `addons`. The folders are now
+  mounted at `/app_configs` and `/local_apps`, not at `/addon_configs` and
+  `/addons`. This requires Supervisor 2026.07.1 or newer.
 
 ## 0.1.0
 
