@@ -1,0 +1,47 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Start Amp headless. s6 restarts this script when Amp exits.
+# ==============================================================================
+
+# Persistent home: Amp login state and config survive restarts and updates.
+export HOME=/data
+mkdir -p "${HOME}/.config/amp"
+
+# Install the HAOS guidance for Amp once. The user can edit the copy in /data.
+if [[ ! -f "${HOME}/.config/amp/AGENTS.md" ]]; then
+    cp /etc/amp-runner/AGENTS.md "${HOME}/.config/amp/AGENTS.md"
+    bashio::log.info "Installed default AGENTS.md at ${HOME}/.config/amp/AGENTS.md"
+fi
+
+# Optional API key.
+if bashio::config.has_value 'api_key'; then
+    AMP_API_KEY="$(bashio::config 'api_key')"
+    export AMP_API_KEY
+else
+    bashio::log.warning "No api_key is set. Amp must already have login state in /data."
+fi
+
+# Working directory.
+workdir="$(bashio::config 'working_directory')"
+if [[ ! -d "${workdir}" ]]; then
+    bashio::log.warning "working_directory '${workdir}' does not exist; using /config"
+    workdir=/config
+fi
+cd "${workdir}" || bashio::exit.nok "Cannot change to ${workdir}"
+
+# Build the command.
+args=(--no-tui)
+
+if bashio::config.has_value 'runner_id'; then
+    args+=(--runner-id "$(bashio::config 'runner_id')")
+fi
+
+if bashio::config.true 'remote_control_terminal'; then
+    args+=(--remote-control-terminal)
+fi
+
+# The args never contain the API key, so logging them is safe.
+bashio::log.info "Starting in ${workdir}: amp ${args[*]}"
+
+exec amp "${args[@]}"

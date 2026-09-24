@@ -1,0 +1,20 @@
+configuration:
+  runner_id:
+    name: Runner ID
+    description: >-
+      Optional. When set, Amp starts with --runner-id <value>.
+      The value must be a valid hostname (letters, digits, hyphens, and dots).
+      Leave empty to start Amp without a runner ID.
+  remote_control_terminal:
+    name: Remote control terminal
+    description: >-
+      When checked, Amp starts with --remote-control-terminal.
+  api_key:
+    name: Amp API key
+    description: >-
+      Optional. Exported as AMP_API_KEY. Leave empty when Amp already has
+      login state in the add-on's persistent storage.
+  working_directory:
+    name: Working directory
+    description: >-
+      The directory where Amp starts. Default: /config.

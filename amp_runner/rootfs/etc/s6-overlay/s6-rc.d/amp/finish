@@ -1,0 +1,16 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Runs when Amp exits. s6 restarts the service after this script.
+# ==============================================================================
+
+exit_code="${1}"
+signal="${2}"
+
+if [[ "${exit_code}" -eq 256 ]]; then
+    bashio::log.info "Amp stopped by signal ${signal}"
+else
+    # s6 kills a finish script that runs longer than 5 seconds (timeout-finish).
+    bashio::log.warning "Amp exited with code ${exit_code}; restarting in 3 seconds"
+    sleep 3
+fi

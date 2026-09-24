@@ -1,0 +1,25 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  addon-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: frenck/action-addon-linter@v2
+        with:
+          path: "./amp_runner"
+
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: ShellCheck s6 scripts
+        run: |
+          shellcheck --shell=bash \
+            amp_runner/rootfs/etc/s6-overlay/s6-rc.d/amp/run \
+            amp_runner/rootfs/etc/s6-overlay/s6-rc.d/amp/finish \
+            test/run-cases.sh
