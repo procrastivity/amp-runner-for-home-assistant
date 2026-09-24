@@ -37,12 +37,24 @@ cd "${workdir}" || bashio::exit.nok "Cannot change to ${workdir}"
 # Build the command.
 args=(--no-tui)
 
+# Serve the Home Assistant configuration even when Amp starts elsewhere.
+if [[ -d /homeassistant ]]; then
+    args+=(--dir /homeassistant)
+fi
+
 if bashio::config.has_value 'runner_id'; then
     args+=(--runner-id "$(bashio::config 'runner_id')")
 fi
 
 if bashio::config.true 'remote_control_terminal'; then
     args+=(--remote-control-terminal)
+fi
+
+if bashio::config.true 'discover_git_projects'; then
+    args+=(--discover-dirs=/share)
+    if bashio::config.has_value 'discover_depth'; then
+        args+=(--discover-depth "$(bashio::config 'discover_depth')")
+    fi
 fi
 
 # The args never contain the API key, so logging them is safe.

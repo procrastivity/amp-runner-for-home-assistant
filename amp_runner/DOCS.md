@@ -21,18 +21,24 @@ debug and configure Home Assistant.
 
 ## Configuration
 
-The options `runner_id` and `api_key` are optional and have no default.
+The options `runner_id`, `api_key`, and `discover_depth` are optional and have no default.
 To see them, turn on **Show unused optional configuration options** in the
 **Configuration** tab.
 
-The add-on builds the Amp command from the options:
+The launcher adds `--dir /homeassistant` when that directory exists, so the
+Home Assistant configuration remains available to select even when
+`working_directory` points somewhere else. `working_directory` still controls
+where Amp starts.
+
+The add-on builds the Amp command from the options. For the default
+configuration, where `/homeassistant` exists:
 
 | `runner_id` | `remote_control_terminal` | Command |
 |---|---|---|
-| unset / empty | `false` | `amp --no-tui` |
-| `grandmas-garage-server` | `false` | `amp --no-tui --runner-id grandmas-garage-server` |
-| unset / empty | `true` | `amp --no-tui --remote-control-terminal` |
-| `grandmas-garage-server` | `true` | `amp --no-tui --runner-id grandmas-garage-server --remote-control-terminal` |
+| unset / empty | `false` | `amp --no-tui --dir /homeassistant` |
+| `grandmas-garage-server` | `false` | `amp --no-tui --dir /homeassistant --runner-id grandmas-garage-server` |
+| unset / empty | `true` | `amp --no-tui --dir /homeassistant --remote-control-terminal` |
+| `grandmas-garage-server` | `true` | `amp --no-tui --dir /homeassistant --runner-id grandmas-garage-server --remote-control-terminal` |
 
 ### Option: `runner_id`
 
@@ -68,6 +74,28 @@ that directory also does not exist, the add-on uses `/data`.
 Do not use `/config`. In current Supervisor versions, `/config` is the path
 for an add-on's own configuration folder, and this add-on does not map one.
 
+### Option: `discover_git_projects`
+
+Default: `false`. When checked, Amp discovers Git checkouts under `/share`
+and makes them available as runner directories. The add-on already mounts
+`/share` read-write. For example, a checkout at `/share/repos/my-project`
+can be selected as a working directory. Other add-ons that map `/share` may
+also be able to change these files, so do not store secrets there.
+
+Amp scans up to two directory levels by default and watches for new checkouts.
+Only Git checkouts are discovered; ordinary folders and bare repositories
+are not served as projects.
+
+### Option: `discover_depth`
+
+Optional integer from 1 to 10, with no add-on default. When left empty, Amp
+uses its default depth of 2. The depth is passed only when
+`discover_git_projects` is checked; a saved depth is ignored otherwise.
+Increase it only when your repositories are nested deeper under `/share`.
+
+Home Assistant's standard add-on configuration does not conditionally hide
+this optional field based on the checkbox. It may require enabling **Show
+unused optional configuration options** to edit it.
 
 ## Persistence
 

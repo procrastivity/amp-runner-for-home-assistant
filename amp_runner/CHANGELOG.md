@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2
+
+- Add `/homeassistant` as a served runner directory when it exists, independent
+  of the configured startup directory.
+- Add optional Git checkout discovery under the shared `/share` mount, disabled
+  by default, with an optional discovery-depth setting.
+
 ## 0.1.1
 
 - Fix: the default `working_directory` is now `/homeassistant`, where the

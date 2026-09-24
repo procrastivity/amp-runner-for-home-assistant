@@ -1,5 +1,5 @@
 {
   "remote_control_terminal": false,
   "working_directory": "/homeassistant",
-  "discover_git_projects": false
+  "discover_git_projects": true
 }

@@ -19,3 +19,13 @@ configuration:
     description: >-
       The directory where Amp starts. Default: /homeassistant, the Home
       Assistant configuration directory.
+  discover_git_projects:
+    name: Discover git projects under the shared filesystem
+    description: >-
+      When checked, Amp serves Git checkouts discovered under /share.
+      The /share mount is writable and may also be accessible to other add-ons.
+  discover_depth:
+    name: Git project discovery depth
+    description: >-
+      Optional scan depth from 1 to 10. Amp uses depth 2 when left empty.
+      This setting is used only when project discovery is checked.

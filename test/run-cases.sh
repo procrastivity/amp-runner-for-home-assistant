@@ -114,13 +114,17 @@ run_case() {
     fi
 }
 
-run_case options.none.json "amp --no-tui"
-run_case options.id-only.json "amp --no-tui --runner-id grandmas-garage-server"
-run_case options.rct-only.json "amp --no-tui --remote-control-terminal"
-run_case options.both.json "amp --no-tui --runner-id grandmas-garage-server --remote-control-terminal"
-run_case options.empty-id-with-key.json "amp --no-tui"
-run_case options.old-config-dir.json "amp --no-tui" /homeassistant
+run_case options.none.json "amp --no-tui --dir /homeassistant"
+run_case options.id-only.json "amp --no-tui --dir /homeassistant --runner-id grandmas-garage-server"
+run_case options.rct-only.json "amp --no-tui --dir /homeassistant --remote-control-terminal"
+run_case options.both.json "amp --no-tui --dir /homeassistant --runner-id grandmas-garage-server --remote-control-terminal"
+run_case options.empty-id-with-key.json "amp --no-tui --dir /homeassistant"
+run_case options.old-config-dir.json "amp --no-tui --dir /homeassistant" /homeassistant
 run_case options.old-config-dir.json "amp --no-tui" /data no
+run_case options.other-working-directory.json "amp --no-tui --dir /homeassistant" /data
+run_case options.discover-git-projects.json "amp --no-tui --dir /homeassistant --discover-dirs=/share"
+run_case options.discover-depth.json "amp --no-tui --dir /homeassistant --discover-dirs=/share --discover-depth 3"
+run_case options.depth-while-disabled.json "amp --no-tui --dir /homeassistant"
 
 if [[ "${failures}" -gt 0 ]]; then
     echo "${failures} check(s) failed"
