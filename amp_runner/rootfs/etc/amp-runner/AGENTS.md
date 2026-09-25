@@ -32,6 +32,7 @@ You run inside the "Amp Runner" Home Assistant add-on on Home Assistant OS.
 - `ha addons`, `ha os info`, `ha network info` — system information
 - `docker ps`, `docker logs <name>`, `docker exec -it <name> sh` — containers
   (Home Assistant Core runs in the container `homeassistant`)
+- `tmux` — create and manage terminal sessions in this container
 - You do not share the host PID namespace. `ps` shows only the processes of
   this container.
 

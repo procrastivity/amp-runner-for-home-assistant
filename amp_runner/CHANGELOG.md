@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Include `tmux` in the add-on image.
+
 ## 0.1.2
 
 - Add `/homeassistant` as a served runner directory when it exists, independent
